@@ -1,3 +1,4 @@
+const { findByIdAndDelete } = require("./model");
 const Category = require("./model");
 
 module.exports = {
@@ -39,6 +40,15 @@ module.exports = {
   update: async (req, res) => {
     try {
       await Category.findByIdAndUpdate(req.body.id, { name: req.body.name });
+      res.redirect("/category");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  destroy: async (req, res) => {
+    try {
+      await Category.findByIdAndDelete(req.params.id);
       res.redirect("/category");
     } catch (error) {
       console.log(error);
