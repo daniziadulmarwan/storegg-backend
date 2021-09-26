@@ -22,7 +22,10 @@ module.exports = {
 
   create: async (req, res) => {
     try {
-      res.render("admin/category/create");
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alert = { status: alertStatus, message: alertMessage };
+      res.render("admin/category/create", { alert });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -39,7 +42,7 @@ module.exports = {
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
-      res.redirect("/category");
+      res.redirect("/category/create");
     }
   },
 
@@ -57,6 +60,8 @@ module.exports = {
   update: async (req, res) => {
     try {
       await Category.findByIdAndUpdate(req.body.id, { name: req.body.name });
+      req.flash("alertMessage", "Berhasil ubah data");
+      req.flash("alertStatus", "success");
       res.redirect("/category");
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -68,6 +73,8 @@ module.exports = {
   destroy: async (req, res) => {
     try {
       await Category.findByIdAndDelete(req.params.id);
+      req.flash("alertMessage", "Berhasil hapus data");
+      req.flash("alertStatus", "success");
       res.redirect("/category");
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
