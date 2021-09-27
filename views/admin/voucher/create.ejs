@@ -1,0 +1,128 @@
+<%- include ../../partials/header.ejs %> <%- include ../../partials/navbar.ejs
+%> <%- include ../../partials/sidebar.ejs %>
+
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Voucher</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/voucher">Voucher</a></li>
+            <li class="breadcrumb-item active">Tambah</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <% include ../../partials/message.ejs %>
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Form tambah voucher</h3>
+            </div>
+            <form
+              method="post"
+              action="/voucher/create"
+              enctype="multipart/form-data"
+            >
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="name">Name game</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    autocomplete="off"
+                    placeholder="Masukkan nama game"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Kategori</label>
+                  <select
+                    class="form-control select2"
+                    style="width: 100%"
+                    name="category"
+                  >
+                    <option selected="selected">Pilih kategori</option>
+                    <% categories.forEach(category => { %>
+                    <option value="<%= category.id %>">
+                      <%= category.name %>
+                    </option>
+                    <% }) %>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Nominal</label>
+                  <div class="select2-purple">
+                    <select
+                      class="form-control select2"
+                      multiple="multiple"
+                      style="width: 100%"
+                      name="nominal"
+                      data-placeholder="Pilih nominal"
+                    >
+                      <% nominals.forEach(nominal => { %>
+                      <option value="<%= nominal.id %>">
+                        <%= nominal.coinName %> <%=
+                        nominal.price.toLocaleString() %>
+                      </option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="image">Gambar</label>
+                  <input
+                    type="file"
+                    class="form-control-file"
+                    id="image"
+                    name="image"
+                    autocomplete="off"
+                    placeholder="Pilih gambar"
+                  />
+                  <br />
+                  <img src="" id="preview" />
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="/voucher" class="btn btn-secondary">Kembali</a>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<%- include ../../partials/footer.ejs %> <%- include ../../partials/js.ejs %>
+<script>
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      let reader = new FileReader();
+
+      reader.onload = function (e) {
+        $("#preview").attr("src", e.target.result);
+        $("#preview").attr("width", "50%");
+        $("#preview").attr("height", "50%");
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#image").change(function () {
+    readURL();
+  });
+</script>
