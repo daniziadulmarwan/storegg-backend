@@ -8,7 +8,7 @@ module.exports = {
       const alert = { status: alertStatus, message: alertMessage };
       const categories = await Category.find();
       res.render("admin/category/index", {
-        title: "StoreGG",
+        title: "Category",
         categories,
         alert,
       });
@@ -24,7 +24,10 @@ module.exports = {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { status: alertStatus, message: alertMessage };
-      res.render("admin/category/create", { alert });
+      res.render("admin/category/create", {
+        title: "Category",
+        alert,
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -48,7 +51,7 @@ module.exports = {
   edit: async (req, res) => {
     try {
       const category = await Category.findById(req.params.id);
-      res.render("admin/category/edit", { category });
+      res.render("admin/category/edit", { category, title: "Category" });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
