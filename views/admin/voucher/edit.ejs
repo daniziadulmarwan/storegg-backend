@@ -1,0 +1,132 @@
+<%- include ../../partials/header.ejs %> <%- include ../../partials/navbar.ejs
+%> <%- include ../../partials/sidebar.ejs %>
+
+<div class="content-wrapper">
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Voucher</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/voucher">Voucher</a></li>
+            <li class="breadcrumb-item active">Ubah</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">
+                Form ubah voucher "<%= voucher.name %>"
+              </h3>
+            </div>
+            <form
+              method="post"
+              action="/voucher/create"
+              enctype="multipart/form-data"
+            >
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="name">Name game</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    autocomplete="off"
+                    placeholder="Masukkan nama game"
+                    value="<%= voucher.name %>"
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Kategori</label>
+                  <select
+                    class="form-control select2"
+                    style="width: 100%"
+                    name="category"
+                  >
+                    <option selected="selected">Pilih kategori</option>
+                    <% categories.forEach(category => { %>
+                    <option value="<%= category.id %>" 
+                      <% if (category.id.toString() == voucher?.category?.id.toString()) { %> selected <% } %>
+                      >
+                      <%= category.name %>
+                    </option>
+                    <% }) %>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Nominal</label>
+                  <div class="select2-purple">
+                    <select
+                      class="form-control select2"
+                      multiple="multiple"
+                      style="width: 100%"
+                      name="nominals"
+                      data-placeholder="Pilih nominal"
+                    >
+                      <% nominals.forEach(nominal => { %>
+                      <option value="<%= nominal.id %>"
+                      <% voucher.nominals.forEach(voucherNominal => { %>
+                        <% if (nominal.id.toString() === voucherNominal.id.toString()) { %>
+                          selected
+                        <% } %>
+                      <% }) %>  
+                      >
+                        <%= nominal.coinName %> <%=
+                        nominal.coinQuantity %>
+                      </option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="image">Gambar</label>
+                  <img class="img-preview img-fluid col-sm-5 mb-3" src="<%= `/uploads/${voucher.thumbnail}` %>" />
+                  <input
+                    type="file"
+                    class="form-control-file"
+                    id="image"
+                    name="image"
+                    onchange="previewImage()"
+                  />
+                </div>
+              </div>
+              <div class="card-footer">
+                <a href="/voucher" class="btn btn-secondary">Kembali</a>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<%- include ../../partials/footer.ejs %> <%- include ../../partials/js.ejs %>
+<script>
+  function previewImage() {
+    const image = document.querySelector("#image");
+    const imagePreview = document.querySelector(".img-preview");
+
+    imagePreview.style.display = "block";
+
+    const oFReader = new FileReader();
+    oFReader.readAsDataURL(image.files[0]);
+
+    oFReader.onload = function (oFREvent) {
+      imagePreview.src = oFREvent.target.result;
+    };
+  }
+</script>

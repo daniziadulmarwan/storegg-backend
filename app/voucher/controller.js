@@ -105,16 +105,25 @@ module.exports = {
     }
   },
 
-  // edit: async (req, res) => {
-  //   try {
-  //     const nominal = await Nominal.findById(req.params.id);
-  //     res.render("admin/nominal/edit", { nominal });
-  //   } catch (error) {
-  //     req.flash("alertMessage", `${error.message}`);
-  //     req.flash("alertStatus", "danger");
-  //     res.redirect("/nominal");
-  //   }
-  // },
+  edit: async (req, res) => {
+    try {
+      const categories = await Category.find();
+      const nominals = await Nominal.find();
+      const voucher = await Voucher.findById(req.params.id)
+        .populate("category")
+        .populate("nominals");
+      res.render("admin/voucher/edit", {
+        title: "Voucher Edit",
+        voucher,
+        categories,
+        nominals,
+      });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/voucher");
+    }
+  },
 
   // update: async (req, res) => {
   //   try {
