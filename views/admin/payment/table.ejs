@@ -1,0 +1,50 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Tipe pembayaran</th>
+      <th>Banks</th>
+      <th>Status</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% payments.forEach((payment,index) => { %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= payment.type %></td>
+      <td>
+        <% payment.banks.forEach(bank => { %>
+        <span class="badge badge-warning">
+          <%= bank.name %> | <%= bank.bankName %> | <%= bank.rekeningNumber %>
+        </span>
+        <% }) %>
+      </td>
+      <td>
+        <% if(payment.status === 'Y') { %>
+        <span class="badge badge-success">Aktif</span>
+        <%} else {%>
+        <span class="badge badge-danger">Tidak aktif</span>
+        <% } %>
+      </td>
+      <td>
+        <form
+          action="/payment/destroy/<%= payment.id %>?_method=DELETE"
+          method="post"
+        >
+          <a
+            href="/payment/edit/<%= payment.id %>"
+            class="btn btn-warning btn-sm"
+          >
+            <i class="fas fa-pencil-alt"></i>
+            Ubah</a
+          >
+          <button type="submit" class="btn btn-danger btn-sm">
+            <i class="fas fa-trash"></i> Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
