@@ -77,16 +77,16 @@ module.exports = {
     }
   },
 
-  // destroy: async (req, res) => {
-  //   try {
-  //     await Category.findByIdAndDelete(req.params.id);
-  //     req.flash("alertMessage", "Berhasil hapus data");
-  //     req.flash("alertStatus", "success");
-  //     res.redirect("/category");
-  //   } catch (error) {
-  //     req.flash("alertMessage", `${error.message}`);
-  //     req.flash("alertStatus", "danger");
-  //     res.redirect("/category");
-  //   }
-  // },
+  destroy: async (req, res) => {
+    try {
+      await Payment.findByIdAndDelete(req.params.id);
+      req.flash("alertMessage", "Berhasil hapus data");
+      req.flash("alertStatus", "success");
+      res.redirect("/payment");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/payment");
+    }
+  },
 };
