@@ -6,7 +6,7 @@ module.exports = {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { status: alertStatus, message: alertMessage };
-      const transactions = await Transaction.find();
+      const transactions = await Transaction.find().populate("player");
       res.render("admin/transaction/index", {
         title: "Transaction",
         transactions,
