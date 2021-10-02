@@ -8,7 +8,7 @@ module.exports = {
       const alert = { status: alertStatus, message: alertMessage };
       const nominals = await Nominal.find();
       res.render("admin/nominal/index", {
-        title: "StoreGG",
+        title: "Nominal",
         nominals,
         alert,
         user: req.session.user,
