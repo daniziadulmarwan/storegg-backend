@@ -22,6 +22,7 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+// middlewares
 app.use(
   session({
     secret: "keyboard cat",
@@ -42,6 +43,7 @@ app.use(
   express.static(path.join(__dirname, "/node_modules/admin-lte/"))
 );
 
+// routers
 app.use("/", userRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/category", categoryRouter);
