@@ -19,6 +19,7 @@ module.exports = {
         title: "Voucher",
         vouchers,
         alert,
+        user: req.session.user,
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -39,6 +40,7 @@ module.exports = {
         title: "Voucher",
         categories,
         nominals,
+        user: req.session.user,
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);

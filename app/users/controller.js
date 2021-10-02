@@ -58,4 +58,15 @@ module.exports = {
       res.redirect("/");
     }
   },
+
+  actionSignout: (req, res) => {
+    try {
+      req.session.destroy();
+      res.redirect("/");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "danger");
+      res.redirect("/");
+    }
+  },
 };

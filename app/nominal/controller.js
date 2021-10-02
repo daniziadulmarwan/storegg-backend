@@ -11,6 +11,7 @@ module.exports = {
         title: "StoreGG",
         nominals,
         alert,
+        user: req.session.user,
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);

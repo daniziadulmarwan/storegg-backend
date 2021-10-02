@@ -11,6 +11,7 @@ module.exports = {
         title: "Bank",
         banks,
         alert,
+        user: req.session.user,
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
