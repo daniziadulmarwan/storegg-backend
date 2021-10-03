@@ -2,6 +2,8 @@ const Player = require("../player/model");
 const path = require("path");
 const fs = require("fs");
 const config = require("../../config");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   signup: async (req, res, next) => {
@@ -62,5 +64,41 @@ module.exports = {
       }
       next(error);
     }
+  },
+
+  signin: (req, res) => {
+    const { email, password } = req.body;
+    Player.findOne({ email: email })
+      .then((player) => {
+        if (player) {
+          let checkPassword = bcrypt.compareSync(password, player.password);
+          if (checkPassword) {
+            const token = jwt.sign(
+              {
+                player: {
+                  id: player.id,
+                  name: player.name,
+                  username: player.username,
+                  email: player.email,
+                  phoneNumber: player.phoneNumber,
+                  avatar: player.avatar,
+                },
+              },
+              config.jwtKey
+            );
+            res.status(200).json({ data: { token } });
+          } else {
+            res.status(403).json({ message: "Incorrect password" });
+          }
+        } else {
+          res.status(403).json({ message: "Incorrect user" });
+        }
+      })
+      .catch((error) => {
+        res
+          .status(500)
+          .json({ message: error.message || "Internal server error" });
+        next();
+      });
   },
 };
