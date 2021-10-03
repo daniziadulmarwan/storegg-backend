@@ -1,6 +1,9 @@
 const Player = require("./model");
 const Voucher = require("../voucher/model");
 const Category = require("../category/model");
+const Nominal = require("../nominal/model");
+const Payment = require("../payment/model");
+const Bank = require("../bank/model");
 
 module.exports = {
   landingPage: async (req, res) => {
@@ -40,6 +43,52 @@ module.exports = {
     try {
       const category = await Category.find();
       res.status(200).json({ data: category });
+    } catch (error) {
+      res.status(500).json({
+        message: error.message || "Internal server error",
+      });
+    }
+  },
+
+  checkout: async (req, res) => {
+    try {
+      const { accountUser, name, nominal, voucher, payment, bank } = req.body;
+
+      const res_voucher = await Voucher.findOne({ _id: voucher })
+        .select("_id name category thumnail user")
+        .populate("category")
+        .populate("user");
+      if (!res_voucher)
+        res.status(404).json({ message: "Voucher game not found" });
+
+      const res_nominal = await Nominal.findOne({ _id: nominal });
+      if (!res_nominal)
+        res.status(404).json({ message: "Nominal game not found" });
+
+      const res_payment = await Payment.findOne({ _id: payment });
+      if (!res_payment)
+        res.status(404).json({ message: "Payment game not found" });
+
+      const res_bank = await Bank.findOne({ _id: bank });
+      if (!res_bank) res.status(404).json({ message: "Bank not found" });
+
+      // insert data
+      const payload = {
+        historyVoucherTopup: {
+          gameName: res_voucher._doc.name,
+          category: res_voucher._doc.category ?? "-",
+          thumbnail: res_voucher._doc.thumbnail,
+          coinName: res_nominal._doc.coinName,
+          coinQuantity: res_nominal._doc.coinQuantity,
+          price: res_nominal._doc.price,
+        },
+        historyPayment: {
+          name: res_payment._doc.name,
+          type: res_payment._doc.type,
+          bankName: res_payment._doc.bankName,
+          rekeningNumber: res_payment._doc.rekeningNumber,
+        },
+      };
     } catch (error) {
       res.status(500).json({
         message: error.message || "Internal server error",
