@@ -28,6 +28,7 @@ module.exports = {
       res.render("admin/category/create", {
         title: "Category",
         alert,
+        user: req.session.user,
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -52,7 +53,11 @@ module.exports = {
   edit: async (req, res) => {
     try {
       const category = await Category.findById(req.params.id);
-      res.render("admin/category/edit", { category, title: "Category" });
+      res.render("admin/category/edit", {
+        category,
+        title: "Category",
+        user: req.session.user,
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");

@@ -27,6 +27,7 @@ module.exports = {
       const alert = { status: alertStatus, message: alertMessage };
       res.render("admin/bank/create", {
         title: "Bank",
+        user: req.session.user,
         alert,
       });
     } catch (error) {
@@ -53,7 +54,11 @@ module.exports = {
   edit: async (req, res) => {
     try {
       const bank = await Bank.findById(req.params.id);
-      res.render("admin/bank/edit", { bank, title: "Bank" });
+      res.render("admin/bank/edit", {
+        bank,
+        title: "Bank",
+        user: req.session.user,
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");

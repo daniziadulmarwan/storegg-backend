@@ -25,7 +25,11 @@ module.exports = {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { status: alertStatus, message: alertMessage };
-      res.render("admin/nominal/create", { alert, title: "Category" });
+      res.render("admin/nominal/create", {
+        alert,
+        title: "Category",
+        user: req.session.user,
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
@@ -50,7 +54,11 @@ module.exports = {
   edit: async (req, res) => {
     try {
       const nominal = await Nominal.findById(req.params.id);
-      res.render("admin/nominal/edit", { nominal, title: "Category" });
+      res.render("admin/nominal/edit", {
+        nominal,
+        title: "Category",
+        user: req.session.user,
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");

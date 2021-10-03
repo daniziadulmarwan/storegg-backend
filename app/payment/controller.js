@@ -30,6 +30,7 @@ module.exports = {
         title: "Payment",
         alert,
         banks: await Bank.find(),
+        user: req.session.user,
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -56,7 +57,12 @@ module.exports = {
     try {
       const payment = await Payment.findById(req.params.id).populate("banks");
       const banks = await Bank.find();
-      res.render("admin/payment/edit", { payment, title: "Payment", banks });
+      res.render("admin/payment/edit", {
+        payment,
+        title: "Payment",
+        banks,
+        user: req.session.user,
+      });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");

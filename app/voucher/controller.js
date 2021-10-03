@@ -120,6 +120,7 @@ module.exports = {
         voucher,
         categories,
         nominals,
+        user: req.session.user,
       });
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);

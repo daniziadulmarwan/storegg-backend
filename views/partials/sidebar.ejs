@@ -18,7 +18,10 @@
         data-accordion="false"
       >
         <li class="nav-item">
-          <a href="/" class="nav-link">
+          <a
+            href="/"
+            class="nav-link<%= title === 'Dashboard' ? ' active' : '' %>"
+          >
             <i class="nav-icon fas fa-home"></i>
             <p>Beranda</p>
           </a>
@@ -26,19 +29,28 @@
         <!-- START: Master -->
         <li class="nav-header">Master</li>
         <li class="nav-item">
-          <a href="/category" class="nav-link">
+          <a
+            href="/category"
+            class="nav-link<%= title === 'Category' ? ' active' : '' %>"
+          >
             <i class="nav-icon far fa-calendar-alt"></i>
             <p>Kategori</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="/nominal" class="nav-link">
+          <a
+            href="/nominal"
+            class="nav-link<%= title === 'Nominal' ? ' active' : '' %>"
+          >
             <i class="nav-icon fas fa-tasks"></i>
             <p>Nominal</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="/voucher" class="nav-link">
+          <a
+            href="/voucher"
+            class="nav-link<%= title === 'Voucher' ? ' active' : '' %>"
+          >
             <i class="nav-icon fas fa-image"></i>
             <p>Voucher</p>
           </a>
@@ -47,13 +59,19 @@
         <!-- START: Payment -->
         <li class="nav-header">Metode Pembayaran</li>
         <li class="nav-item">
-          <a href="/bank" class="nav-link">
+          <a
+            href="/bank"
+            class="nav-link<%= title === 'Bank' ? ' active' : '' %>"
+          >
             <i class="nav-icon fas fa-money-check"></i>
             <p>Bank</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="/payment" class="nav-link">
+          <a
+            href="/payment"
+            class="nav-link<%= title === 'Payment' ? ' active' : '' %>"
+          >
             <i class="nav-icon fas fa-money-check-alt"></i>
             <p>Jenis Pembayaran</p>
           </a>
@@ -63,7 +81,10 @@
         <!-- START: Transaction -->
         <li class="nav-header">Transaksi</li>
         <li class="nav-item">
-          <a href="/transaction" class="nav-link">
+          <a
+            href="/transaction"
+            class="nav-link<%= title === 'Transaction' ? ' active' : '' %>"
+          >
             <i class="nav-icon fas fa-shopping-cart"></i>
             <p>Transaksi</p>
           </a>
